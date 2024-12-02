@@ -66,7 +66,7 @@ class UserController extends Controller
         if (Cache::store('database')->has($user->email)) return;
 
         // Add new entry to cache.
-        Cache::forever($user->email, $currentUserHash);
+        Cache::store('database')->forever($user->email, $currentUserHash);
     }
 
     /**
