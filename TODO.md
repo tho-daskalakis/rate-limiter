@@ -1,0 +1,11 @@
+- [ ] Dispatch a job after a user update
+  - [ ] Hash the user state before update
+  - [ ] Add it in a queue
+- [ ] Keep track of dispatch conditions
+  - [ ] 1000 or more jobs in a queue
+  - [ ] Max time limit has expired
+- [ ] Work the queue
+  - [ ] Check each user's original state with current state, do not update if changes are undone
+  - [ ] After reaching dispatch conditions with actual number of requests, create a batch job and work it
+- [ ] Keep track of failed requests
+  - [ ] Failed requests will be sent at the start of the queue with the original user state
