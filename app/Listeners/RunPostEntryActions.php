@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\NewUsersCacheEntry;
+use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -19,7 +19,7 @@ class RunPostEntryActions
     /**
      * Handle the event.
      */
-    public function handle(NewUsersCacheEntry $event): void
+    public function handle(KeyWritten $event): void
     {
         //
     }
