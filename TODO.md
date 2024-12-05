@@ -1,6 +1,7 @@
 - [ ] Dispatch a job after a user update
-  - [ ] Hash the user state before update
-  - [ ] Add it in a queue
+  - [x] Hash the user state before update
+  - [x] Add it in a queue
+  - [ ] Listen for queue transactions and keep track of updated-user records
 - [ ] Keep track of dispatch conditions
   - [ ] 1000 or more jobs in a queue
   - [ ] Max time limit has expired
