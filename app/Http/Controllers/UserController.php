@@ -63,10 +63,10 @@ class UserController extends Controller
         if (Utils::hashUserData($user->only(['name', 'password', 'timezone']) != $currentUserHash)) return;
 
         // Check if user-update record already exists.
-        if (Cache::store('database')->has($user->email)) return;
+        if (Cache::store('redis')->has($user->email)) return;
 
         // Add new entry to cache.
-        Cache::store('database')->forever($user->email, $currentUserHash);
+        Cache::store('redis')->forever($user->email, $currentUserHash);
     }
 
     /**
