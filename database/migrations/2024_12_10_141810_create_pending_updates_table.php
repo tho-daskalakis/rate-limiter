@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id');
-            $table->string('status');
+            $table->string('data_hash');
+            $table->string('status')->default('pending');
             $table->integer('tries')->default(0);
         });
     }
