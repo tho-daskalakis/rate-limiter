@@ -16,8 +16,14 @@ class Utils
         //
     }
 
-    static function hashUserData($userData): string
+    static function hashUserData($user): string
     {
+        $userData = [
+            'name' => $user->name,
+            'password' => $user->password,
+            'timezone' => $user->timezone,
+        ];
+
         $sorted = ksort($userData);
 
         $serialized = serialize($sorted);
