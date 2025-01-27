@@ -11,9 +11,4 @@ class PendingUpdate extends Model
         'status' => 'pending',
         'tries' => 0
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }
