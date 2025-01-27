@@ -1,3 +1,3 @@
 <?php
 
-Schedule::command('ratelimit:reset-timestamp')->hourly();
+Schedule::command('ratelimit:reset-limits')->everyMinute()->sendOutputTo('/tmp/ratelimit-reset.log');
