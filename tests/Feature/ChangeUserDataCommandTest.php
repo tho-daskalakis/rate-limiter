@@ -8,9 +8,9 @@ use Tests\TestCase;
 class ChangeUserDataCommandTest extends TestCase
 {
     use RefreshDatabase;
+    protected bool $seed = true;
 
     public function testUserCount(): void {
-        $this->seed();
         $this->assertDatabaseCount('users', 20);
     }
 
