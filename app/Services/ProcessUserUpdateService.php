@@ -28,6 +28,7 @@ class ProcessUserUpdateService
         // Check if user-update record already exists.
         try {
             // User's email record exists, don't recreate entry.
+            // TODO: check in db instead of cache
             if (Cache::store('redis')->has($user->email)) return;
         } catch (InvalidArgumentException $e) {
             // Handle exception...
