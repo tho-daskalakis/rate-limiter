@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Events\UserUpdated;
+use App\Models\PendingUpdate;
 use App\Models\User;
 use App\Utils;
 use Illuminate\Support\Facades\Cache;
@@ -34,8 +35,13 @@ class ProcessUserUpdateService
         }
 
         // User has their data changed and no record exists.
-        // Add new entry to cache & dispatch user-updated event.
-        Cache::store('redis')->forever($user->email, $currentUserHash);
+        // Add new entry to db & dispatch user-updated event.
+        $pendingUpdate = new PendingUpdate([
+            'user_id' => $user->id,
+            'data_hash' => $currentUserHash,
+        ]);
+        $pendingUpdate->save();
+
         UserUpdated::dispatch($user);
     }
 }
