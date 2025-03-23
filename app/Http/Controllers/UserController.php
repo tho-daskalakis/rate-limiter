@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\ProcessUserUpdateService;
 use App\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -57,16 +58,10 @@ class UserController extends Controller
     {
         $userData = $request->only(['name', 'password', 'timezone']);
 
-        $currentUserHash = Utils::hashUserData($userData);
+        // Delegate user update actions to relevant service.
+        ProcessUserUpdateService::class->checkForExistingUserEntry($user, $userData);
 
-        // If no changes are made, return.
-        if (Utils::hashUserData($user->only(['name', 'password', 'timezone']) == $currentUserHash)) return;
-
-        // Check if user-update record already exists.
-        if (Cache::store('redis')->has($user->email)) return;
-
-        // Add new entry to cache.
-        Cache::store('redis')->forever($user->email, $currentUserHash);
+        $request->user()->update($userData);
     }
 
     /**
