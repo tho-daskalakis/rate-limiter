@@ -6,8 +6,7 @@ use App\Events\UserUpdated;
 use App\Models\PendingUpdate;
 use App\Models\User;
 use App\Utils;
-use Illuminate\Support\Facades\Cache;
-use Psr\SimpleCache\InvalidArgumentException;
+use Illuminate\Support\Facades\DB;
 
 class ProcessUserUpdateService
 {
@@ -26,14 +25,8 @@ class ProcessUserUpdateService
         if (Utils::hashUserData($user->only(['name', 'password', 'timezone']) == $currentUserHash)) return;
 
         // Check if user-update record already exists.
-        try {
-            // User's email record exists, don't recreate entry.
-            // TODO: check in db instead of cache
-            if (Cache::store('redis')->has($user->email)) return;
-        } catch (InvalidArgumentException $e) {
-            // Handle exception...
-            return;
-        }
+        $userRecord = DB::table('pending_updates')->select()->where('user_id', '=', $user->id)->first();
+        if ($userRecord !== null) return;
 
         // User has their data changed and no record exists.
         // Add new entry to db & dispatch user-updated event.
