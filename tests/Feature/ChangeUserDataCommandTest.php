@@ -16,12 +16,12 @@ class ChangeUserDataCommandTest extends TestCase
     }
 
     public function testUserNameChanged(): void {
-        $user1 = DB::table('users')->where('id', 1)->first();
+        $user1 = DB::table('users')->where('id', '=', 1)->first();
 
         // Run the command
         $this->artisan('app:change-user-data');
 
-        $changedUser1 = DB::table('users')->where('id', 1)->first();
+        $changedUser1 = DB::table('users')->where('id', '=', 1)->first();
         //         print "$user1->name, $user1->email\n";`
         //         print "$changedUser1->name, $user1->email\n";
 
