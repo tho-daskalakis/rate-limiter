@@ -16,13 +16,13 @@ class ProcessUserUpdateService
      * the third party owns. When the sync action is dispatched, it will check for
      * an updated state of the user's data.
      * @param User $user The user making the request to update their data.
-     * @param array $userData The user's data from the request.
+     * @param object $userData The user's data from the request.
      */
-    function checkForExistingUserEntry(User $user, array $userData): void {
-        $currentUserHash = Utils::hashUserData($userData);
+    function checkForExistingUserEntry(User $user, object $userData): void {
+        $currentUserHash = Utils::hashUserData($user->name, $user->password, $user->timezone);
 
         // If no changes are made, return.
-        if (Utils::hashUserData($user->only(['name', 'password', 'timezone']) == $currentUserHash)) return;
+        if (Utils::hashUserData($userData->name, $userData->password, $userData->timezone)) return;
 
         // Check if user-update record already exists.
         $userRecord = DB::table('pending_updates')->select()->where('user_id', '=', $user->id)->first();

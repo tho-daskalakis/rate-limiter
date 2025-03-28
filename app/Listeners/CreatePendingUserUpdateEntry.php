@@ -32,7 +32,7 @@ class CreatePendingUserUpdateEntry
         // Entry doesn't exist, create a new one.
         DB::table('pending_updates')->insert([
             'user_id' => $event->user->id,
-            'data_hash' => Utils::hashUserData($event->user)
+            'data_hash' => Utils::hashUserData($user->name, $user->password, $user->timezone),
         ]);
 
         // Check #entries.

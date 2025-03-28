@@ -59,7 +59,8 @@ class UserController extends Controller
         $userData = $request->only(['name', 'password', 'timezone']);
 
         // Delegate user update actions to relevant service.
-        ProcessUserUpdateService::class->checkForExistingUserEntry($user, $userData);
+        $service = new ProcessUserUpdateService();
+        $service->checkForExistingUserEntry($user, (object)$userData);
 
         $request->user()->update($userData);
     }
