@@ -47,9 +47,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function pendingUpdates(): HasMany
-    {
-        return $this->hasMany(PendingUpdate::class);
-    }
 }
