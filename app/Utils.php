@@ -16,12 +16,12 @@ class Utils
         //
     }
 
-    static function hashUserData($user): string
+    static function hashUserData($name, $pw, $tz): string
     {
         $userData = [
-            'name' => $user->name,
-            'password' => $user->password,
-            'timezone' => $user->timezone,
+            'name' => $name,
+            'password' => $pw,
+            'timezone' => $tz,
         ];
 
         $sorted = ksort($userData);
