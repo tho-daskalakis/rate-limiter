@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\ProcessUserUpdateService;
 use App\Utils;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -54,7 +55,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): void
+    public function update(Request $request, User $user): RedirectResponse
     {
         $userData = $request->only(['name', 'password', 'timezone']);
 
@@ -62,7 +63,9 @@ class UserController extends Controller
         $service = new ProcessUserUpdateService();
         $service->checkForExistingUserEntry($user, (object)$userData);
 
-        $request->user()->update($userData);
+        $user->update($userData);
+
+        return redirect()->route('welcome');
     }
 
     /**
